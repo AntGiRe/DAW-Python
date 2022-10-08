@@ -1,0 +1,5 @@
+print("Introduzca horas trabajadas")
+horas = input()
+print("Introduzca coste por hora")
+coste = input()
+print("Total:", int(horas) * float(coste), "horas.")
