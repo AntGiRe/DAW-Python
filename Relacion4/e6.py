@@ -1,4 +1,10 @@
-def useFunctionOnList(foo, list):
-  return (foo(list))
+def aplicarFuncion(listaNumeros, funcion):
+  listaResultado = []
+  for i in listaNumeros:
+    listaResultado.append(funcion(i))
+  return listaResultado;
 
-print(useFunctionOnList(min, [1,2,3,4,5]))
+def sumaDiez(x):
+  return (x + 10)
+
+print(aplicarFuncion([1,2,3,4], sumaDiez));
