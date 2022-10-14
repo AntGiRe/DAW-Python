@@ -1,10 +1,10 @@
-def aplicarFuncion(listaNumeros, funcion):
+def useFunctionWList(listaNumeros, funcion):
   listaResultado = []
   for i in listaNumeros:
     listaResultado.append(funcion(i))
-  return listaResultado;
+  return listaResultado
 
-def sumaDiez(x):
+def plusTen(x):
   return (x + 10)
 
-print(aplicarFuncion([1,2,3,4], sumaDiez));
+print(useFunctionWList([1,2,3,4], plusTen));
