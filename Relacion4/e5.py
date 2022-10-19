@@ -15,4 +15,4 @@ def binToDec(n):
   return res
 
 print(binToDec(11010))
-
+print(decToBin(10))
