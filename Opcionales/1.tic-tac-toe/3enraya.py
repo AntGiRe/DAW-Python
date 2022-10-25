@@ -1,6 +1,8 @@
+"""Antonio J. Gil Reyes || 24/10/22"""
+
 from random import randrange
 
-#Muestra el tablero
+#Show the board of the game
 def showTab(tab, player, machine):
 	print("-------------")
 	for k in tab:
@@ -15,7 +17,7 @@ def showTab(tab, player, machine):
 		print("")
 		print("-------------")
 
-#Movimiento del jugador
+#The player moves
 def playerMove(tab, x, y):
 	if (tab[x][y] == 0):
 		tab[x][y] = 1
@@ -23,8 +25,8 @@ def playerMove(tab, x, y):
 	else:
 		return(None)
 
-#Movimiento de la maquina
-def MachineMove(tab):
+#The machine moves
+def machineMove(tab):
 	while(True):
 		row = randrange(0, 3)
 		col = randrange(0, 3)
@@ -32,10 +34,10 @@ def MachineMove(tab):
 			tab[row][col] = 2
 			return(tab)
 
-#Comrpueba si la maquina es ganadora
+#Check if the machine wins
 def checkMachine(tab):
 	count = 0
-	#Comprueba verticalmente de la maquina
+	#Check vertically
 	for k in tab:
 		for j in k:
 			if(j == 2):
@@ -48,21 +50,21 @@ def checkMachine(tab):
 		else:
 			count = 0
 
-	#Comprueba horizontalmente de la maquina
+	#Check horizontally
 	for k in range(3):
 		if(tab[0][k] == tab[1][k] == tab[2][k] == 2):
 			return(True)
 
-	#Comprueba las diagonales de la maquina
+	#Check diagonally
 	if(tab[0][0] == tab[1][1] == tab[2][2] == 2):
 		return(True)
 	elif(tab[0][2] == tab[1][1] == tab[2][0] == 2):
 		return(True)
 
-#Comprueba si el jugador es ganador
+#Check if the player wins
 def checkPlayer(tab):
 	count = 0
-	#Comprueba verticalmente del jugador
+	#Check vertically
 	for k in tab:
 		for j in k:
 			if(j == 1):
@@ -75,18 +77,18 @@ def checkPlayer(tab):
 		else:
 			count = 0
 
-	#Comprueba horizontalmente del jugador
+	#Check horizontally
 	for k in range(3):
 		if(tab[0][k] == tab[1][k] == tab[2][k] == 1):
 			return(True)
 
-	#Comprueba las diagonales del jugador
+	#Check diagonally
 	if(tab[0][0] == tab[1][1] == tab[2][2] == 1):
 		return(True)
 	elif(tab[0][2] == tab[1][1] == tab[2][0] == 1):
 		return(True)
 
-#Comprueba cuantos huecos libres quedan en el tablero
+#Return number of empty holes
 def checkEmpty(tab):
 	count = 0
 	for k in tab:
@@ -95,12 +97,12 @@ def checkEmpty(tab):
 				count += 1
 	return(count)
 
-#Crea archivo si no existe
+#Create the ranking file
 def createRanking():
 	file = open("ranking.txt", "a")
 	file.close()
 
-#Actualiza ranking
+#Update the ranking file
 def updateRanking(username):
 	flag = 0
 	file = open("ranking.txt","r")
@@ -118,7 +120,7 @@ def updateRanking(username):
 		w.write(username + ";1" + "\n")
 	w.close()
 
-#Muestra ganadores de 3raya
+#Show the ranking of the game
 def showRanking():
 	f = open("ranking.txt", "r")
 	lines = f.readlines()
@@ -127,7 +129,6 @@ def showRanking():
 	for line in lines:
 		print(line[:line.index(";")] + " - " + line[line.index(";") + 1 : line.index("\n")] + " victorias")
 
-#Se crea el archivo ranking si no existe
 createRanking()
 
 tab = [[0 for k in range(3)] for j in range(3)]
@@ -136,11 +137,11 @@ end = False
 
 username = input("Introduce el nombre de usuario: ")
 
-#El jugador elige su caracter
+#The player chooses his token
 while(len(player) > 1):
 	player = input("Elige un caracter con el que jugar: ")
 
-#La maquina elige su caracter
+#The machine chooses his token too
 if (player != 'O'):
 	machine = 'O'
 else:
@@ -154,7 +155,7 @@ print("¡¡Te ganaré miserable humano!!\n")
 
 while(end != True):
 	showTab(tab, player, machine)
-	#Si la maquina gana o no quedan huecos se acaba. Si no, se sigue
+	#If the machine wins or not empty holes left, game ends. If not, show must go on
 	if(checkMachine(tab)):
 		end = True
 		print("¡La maquina gana!")
@@ -163,7 +164,7 @@ while(end != True):
 		end = True
 	else:
 		while (True):
-			#Se revisan si lo introducido es correcto
+			#Check if input is OK
 			while (True):
 				try:
 					x = int(input("Introduce numero de fila: "))
@@ -179,17 +180,16 @@ while(end != True):
 			if (newTab != None):
 				tab = newTab
 				break;
-		#Si el jugador gana o no quedan huecos, se acaba. Si no, se sigue.
+		#If player wins or not empty holes left, game ends. If not, show must go on.
 		if(checkPlayer(tab)):
 			end = True
 			print("¡El jugador gana!")
-			#Suma una victoria en el ranking
 			updateRanking(username)
 		elif(checkEmpty(tab) == 0):
 			print("Se acabaron los huecos libres")
 			end = True
 		else:
-	 		tab = MachineMove(tab)
+	 		tab = machineMove(tab)
 
 showTab(tab, player, machine)
 print("\nTodos los demás ganadores:")
